@@ -1,3 +1,9 @@
 export { default as Sidebar } from './Sidebar';
 export { default as Footer } from './Footer';
 export { default as Content } from './Content';
+export { default as Homepage } from './Homepage';
+export { default as News } from './News';
+export { default as Exchanges } from './Exchanges';
+export { default as Cryptocurrencies } from './Cryptocurrencies';
+export { default as CryptoDetails } from './CryptoDetails';
+export { default as ErrorPage } from './ErrorPage';
