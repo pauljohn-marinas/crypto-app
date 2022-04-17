@@ -12,9 +12,7 @@ const App = () => {
         height: '100vh',
       }}>
         <Sidebar/>
-        <Box component='main' sx={{ 
-          flex: '.8',
-         }}>
+        <Box component='main' flex={4}>
           <Content/>
           <Footer/>
         </Box>

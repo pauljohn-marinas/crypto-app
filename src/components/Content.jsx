@@ -5,9 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 
 const Content = () => {
   return (
-    <Box component='div' sx={{ 
-        backgroundColor: 'pink',
-     }}>
+    <Box component='div'>
         <Routes>
           <Route path="/" element={<Homepage/>} />
           <Route path="/cryptocurrencies" element={<Cryptocurrencies/>} />

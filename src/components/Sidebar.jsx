@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.png'
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -16,23 +17,15 @@ import ArticleIcon from '@mui/icons-material/Article';
 
 const Sidebar = () => {
   return (
-    <Box component='nav' sx={{ 
-        flex: '.2',
-        backgroundColor: 'primary.dark',
-     }}>
-         <Box sx={{ 
-             display: 'flex',
-             alignItems: 'center',
-             justifyContent: 'center',
-             p: 5,
-        }}>
-            <img src={logo} alt="Cryptoverse Logo" style={{ width: '70px' }} />
+    <Box component='nav' flex={1} bgcolor="primary.dark">
+         <Stack direction="row" justifyContent="center" alignItems="center" spacing={2} sx={{ p:3 }}>
+             <img src={logo} alt="Cryptoverse Logo" style={{ width: '70px' }} />
             <Typography sx={{ 
                 ml: 3,
                 fontWeight: 'bold',
                 color: '#fff'
              }} variant="h4" component="h4">Cryptoverse</Typography>
-         </Box>
+         </Stack>
         <Divider sx={{marginBottom:2}} />
         <List>
             <Link to="/" style={{ color:'#fff', textDecoration:'none' }}>
