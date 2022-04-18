@@ -21,14 +21,14 @@ const StatsValue = styled(Typography)(({theme}) =>({
 
 const Homepage = () => {
 
-  const { data, isFetching } = useGetCryptosQuery();
+  const { data, isFetching } = useGetCryptosQuery(10);
   const globalStats = data?.data?.stats;
 
   if(isFetching) return 'Loading...'; 
 
   return (
     <>
-      <Box  p={5}>
+      <Box p={8}>
         <Typography variant="h4" component="h2" fontWeight={700} sx={{ color:"#263238" }} mb={5}>Global Crypto Stats</Typography>
         <Grid container rowSpacing={3} >
           <Grid item lg={6}>
@@ -55,15 +55,15 @@ const Homepage = () => {
           </Grid>
         </Grid>
       </Box>
-      <Box px={5} mb={5}>
-        <Stack direction="row" justifyContent="space-between" alignItems="center" mb={5}>
+      <Box mb={2}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center" mb={5} px={8}>
           <Typography variant="h4" component="h2" fontWeight={700} sx={{ color:"#263238" }}>Top 10 Cryptocurrencies in the world</Typography>
           <Typography><Link to="/cryptocurrencies" style={{ textDecoration:"none", color:"##1565c0", fontWeight: 500, textTransform: "uppercase" }}>Show More</Link></Typography>
         </Stack>
-        <Stack>
-          <Cryptocurrencies simplified/>
-        </Stack>
-        
+        <Cryptocurrencies simplified/>
+      </Box>
+      <Box px={8}>
+        <Typography variant="h4" component="h2" fontWeight={700} sx={{ color:"#263238" }} mb={5}>Global Crypto Stats</Typography>
       </Box>
     </>
     

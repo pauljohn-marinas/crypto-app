@@ -1,80 +1,74 @@
 import React, { useState } from 'react';
 import millify from 'millify';
 import { Link } from 'react-router-dom';
-import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import Divider from '@mui/material/Divider';
+import TextField from '@mui/material/TextField';
 
 import { useGetCryptosQuery } from '../services/cryptoApi';
 
-const Cryptocurrencies = () => {
-  
-  const { data: cryptosList, isFetching } = useGetCryptosQuery();
+const CardHeader = styled(Box)(({ theme }) =>({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems:"center",
+}));
+const Cryptocurrencies = ({ simplified }) => {
+
+  // const [search, setSearch] = useState("");
+  const count = simplified ? 10: 100;
+  const { data: cryptosList, isFetching } = useGetCryptosQuery(count);
   const [cryptos, setCryptos] = useState(cryptosList?.data?.coins);
 
+  // useState(() => {
+  //   let filteredData = cryptosList?.data?.coins.filter((coin) => coin.name.toLowerCase().includes(search.toLowerCase()));
+  //   setCryptos(filteredData);
+  //   console.log(filteredData);
+  // },[cryptosList, search])
+
+  if(isFetching) return 'Loading ...';
+
   return (
-    <Grid container rowSpacing={3} spacing={2} >
-      <Grid item lg={3}>
-        <Box sx={{ minWidth: 275 }}>
-          <Card variant="outlined">
-            <CardContent>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                Word of the Day
-              </Typography>
-              <Typography variant="h5" component="div">
-                test
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                adjective
-              </Typography>
-              <Typography variant="body2">
-                well meaning and kindly.
-                <br />
-                {'"a benevolent smile"'}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
+    <>
+      {/* {!simplified &&(
+        <Box px={8} pt={5} mb={5}>
+          <TextField id="outlined-basic" label="Search Cryptocurrency" variant="outlined" value={search} onChange={e => setSearch(e.target.value)}/>
         </Box>
-      </Grid>
-      <Grid item lg={3}>
-      <Box sx={{ minWidth: 275 }}>
-          <Card variant="outlined">
-            <CardContent>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                Word of the Day
-              </Typography>
-              <Typography variant="h5" component="div">
-                test
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                adjective
-              </Typography>
-              <Typography variant="body2">
-                well meaning and kindly.
-                <br />
-                {'"a benevolent smile"'}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
-        </Box>
-      </Grid>
-      <Grid item lg={3}>
-        a
-      </Grid>
-      <Grid item lg={3}>
-        a
-      </Grid>
-    </Grid>
+      )} */}
+      <Box mb={5} px={8}>
+        <Stack flexWrap="wrap" direction="row" justifyContent="flex-start">
+          {cryptos?.map((currency, index) => (
+            <Box sx={{ width: 320 }} mb={3} mr={3} key={index}>
+              <Card variant="outlined">
+                <CardHeader p={2}>
+                  <Typography component="h6" fontWeight={700} sx={{ color:"#263238" }}>{`${currency.rank}. ${currency.name}`}</Typography>
+                  <Avatar alt="Coin logo" src={currency.iconUrl} />
+                </CardHeader>
+                <Divider/>
+                <CardContent>
+                  <Typography variant="body2" component="p" fontWeight={400} mb={2}>Price: {millify(currency.price)}</Typography>
+                  <Typography variant="body2" component="p" fontWeight={400} mb={2}>Market Cap: {millify(currency.marketCap)}</Typography>
+                  <Typography variant="body2" component="p" fontWeight={400}>Daily Change: {millify(currency.change)}</Typography>
+                </CardContent>
+                <CardActions>
+                  <Link to={`/crypto/${currency.id}`} style={{ textDecoration: "none" }}>
+                    <Button size="small">Learn More</Button>
+                  </Link>
+                </CardActions>
+              </Card>
+            </Box>
+          ))}
+        </Stack>
+      </Box>
+    </>
+    
   )
 }
 
