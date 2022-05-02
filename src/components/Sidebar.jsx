@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.png'
 import Box from '@mui/material/Box';
@@ -14,10 +14,19 @@ import HomeIcon from '@mui/icons-material/Home';
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import ArticleIcon from '@mui/icons-material/Article';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Drawer from '@mui/material/Drawer';
 
 const Sidebar = () => {
+
+  const [isDrawerOpen,setIsDrawerOpen] = useState(false);
+
   return (
-    <Box component='nav' flex={1} bgcolor="primary.dark">
+    <>
+      <Box component='nav' flex={1} bgcolor="primary.dark" sx={{ position: "fixed", height: "100%", width: "320", display: { xs: "none",sm: "none", md: "none", lg: "block", xl: "block"},}}>
          <Stack direction="row" justifyContent="center" alignItems="center" spacing={2} sx={{ p:3 }}>
              <img src={logo} alt="Cryptoverse Logo" style={{ width: '70px' }} />
             <Typography sx={{ 
@@ -69,7 +78,44 @@ const Sidebar = () => {
             </ListItem>
           </Link>
         </List>
-    </Box>
+      </Box>
+      <Box sx={{ zIndex: "2", width: "100%", display: { xs: "block",sm: "block", md: "block", lg: "none", xl: "none"}, position: "fixed"}}>
+        <AppBar>
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography variant="h6" component="div">Cryptoverse</Typography>
+            <IconButton
+              size="large"
+              edge="end"
+              color="inherit"
+              aria-label="menu"
+              onClick={() => setIsDrawerOpen(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Toolbar>
+          <Drawer open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
+          <List>
+            <ListItem button>
+              <ListItemText primary="Home" />
+            </ListItem>
+
+            <ListItem button>
+              <ListItemText primary="About" />
+            </ListItem>
+
+            <ListItem button>
+              <ListItemText primary="Contact" />
+            </ListItem>
+
+            <ListItem button>
+              <ListItemText primary="Services" />
+            </ListItem>
+          </List>
+        </Drawer>
+        </AppBar>
+      </Box>
+    </>
+    
   )
 }
 

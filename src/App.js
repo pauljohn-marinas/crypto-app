@@ -12,7 +12,7 @@ const App = () => {
         height: '100vh',
       }}>
         <Sidebar/>
-        <Box component='main' flex={4}>
+        <Box component='main' flex={4}  sx={{ paddingLeft: {xl: "320px", lg: "320px", md: "0", sm: "0", xs: "0"}}}>
           <Content/>
           <Footer/>
         </Box>

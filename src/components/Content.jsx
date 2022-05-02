@@ -1,11 +1,10 @@
 import React from 'react'
-import Box from '@mui/material/Box';
 import { Exchanges, Cryptocurrencies, News, Homepage, ErrorPage, CryptoDetails } from "./";
 import { Routes, Route } from 'react-router-dom';
 
 const Content = () => {
   return (
-    <Box component='div'>
+    <>
         <Routes>
           <Route path="/" element={<Homepage/>} />
           <Route path="/cryptocurrencies" element={<Cryptocurrencies/>} />
@@ -14,7 +13,7 @@ const Content = () => {
           <Route path="/exchanges" element={<Exchanges/>} />
           <Route path="*" element={<ErrorPage/>} />
         </Routes>
-    </Box>
+    </>
   )
 }
 

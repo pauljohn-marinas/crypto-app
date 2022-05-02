@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import millify from 'millify';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
@@ -22,26 +22,24 @@ const CardHeader = styled(Box)(({ theme }) =>({
 }));
 const Cryptocurrencies = ({ simplified }) => {
 
-  // const [search, setSearch] = useState("");
-  const count = simplified ? 10: 100;
+  const [search, setSearch] = useState('');
+  const count = simplified ? 10 : 100;
   const { data: cryptosList, isFetching } = useGetCryptosQuery(count);
-  const [cryptos, setCryptos] = useState(cryptosList?.data?.coins);
-
-  // useState(() => {
-  //   let filteredData = cryptosList?.data?.coins.filter((coin) => coin.name.toLowerCase().includes(search.toLowerCase()));
-  //   setCryptos(filteredData);
-  //   console.log(filteredData);
-  // },[cryptosList, search])
+  const [cryptos, setCryptos] = useState([]);
+  useEffect(() => {
+    const filteredData = cryptosList?.data?.coins.filter((coin) => coin.name.toLowerCase().includes(search.toLowerCase()));
+    setCryptos(filteredData);
+  }, [cryptosList, search])
 
   if(isFetching) return 'Loading ...';
-
+  
   return (
     <>
-      {/* {!simplified &&(
+      {!simplified &&(
         <Box px={8} pt={5} mb={5}>
-          <TextField id="outlined-basic" label="Search Cryptocurrency" variant="outlined" value={search} onChange={e => setSearch(e.target.value)}/>
+          <TextField id="outlined-basic" label="Search Cryptocurrency" variant="outlined" onChange={e => setSearch(e.target.value)}/>
         </Box>
-      )} */}
+      )}
       <Box mb={5} px={8}>
         <Stack flexWrap="wrap" direction="row" justifyContent="flex-start">
           {cryptos?.map((currency, index) => (
@@ -49,7 +47,7 @@ const Cryptocurrencies = ({ simplified }) => {
               <Card variant="outlined">
                 <CardHeader p={2}>
                   <Typography component="h6" fontWeight={700} sx={{ color:"#263238" }}>{`${currency.rank}. ${currency.name}`}</Typography>
-                  <Avatar alt="Coin logo" src={currency.iconUrl} />
+                  <Avatar alt="Coin logo" src={currency.iconUrl} sx={{ position: "relative", zIndex: "1" }} />
                 </CardHeader>
                 <Divider/>
                 <CardContent>
