@@ -16,27 +16,27 @@ import { useGetCryptoNewsQuery } from '../services/cryptoNewsApi';
 import { useGetCryptosQuery } from '../services/cryptoApi';
 
 const News = ({ simplified }) => {
+  
   const [newsCategory,setNewsCategory] = useState("Crptocurrency");
   const { data: cryptoNews, isFetching } = useGetCryptoNewsQuery({ newsCategory, count: simplified ? 6 : 18});
   const { data } = useGetCryptosQuery(100);
   const demoImage = "https://www.bing.com/th?id=OVFT.mpzuVZnv8dwIMRfQGPbOPC&pid=News";
 
   if(isFetching) return 'Loading ...';
-
+  
   return (
     <Box mb={5} px={8}>
       {!simplified &&(
-        <Box px={8} pt={5} mb={5}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+        <Box px={8} pt={5} mb={5} pl={0}>
+          <FormControl sx={{ width: 300 }}>
+            <InputLabel id="demo-simple-select-label">Cryptocurrency</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value="test"
-              label="Cryptocurrency"
-              onChange={(value) => setNewsCategory(value)}
+              defaultValue = ""
+              onChange={(value) => setNewsCategory(value.target.value)}
             >
-              {data?.data?.coins.map((coin) => <MenuItem value={coin.name}>{coin.name}</MenuItem> )}
+              {data?.data?.coins.map((coin, index) => <MenuItem key={index} value={coin.name}>{coin.name}</MenuItem> )}
             </Select>
           </FormControl>
         </Box>
@@ -61,8 +61,8 @@ const News = ({ simplified }) => {
                     { news.description > 100 ? `${news.description.substring(0, 100)}...` : news.description}
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Link href={news.url} target="_blank" rel="noreferrer" underline="hover">
+                <CardActions sx={{ padding: "16px" }}>
+                  <Link href={news.url} target="_blank" rel="noreferrer" underline="hover" sx={{ fontSize: ".8em" }}>
                     Learn More
                   </Link>
                 </CardActions>
