@@ -1,10 +1,15 @@
 import React from 'react';
+import millify from 'millify';
 import Box from '@mui/material/Box';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Avatar from '@mui/material/Avatar';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 import { useGetExchangesQuery } from '../services/cryptoApi';
 
@@ -16,26 +21,38 @@ const Exchanges = () => {
   
   return (
     <Box mb={5} px={8} mt={5}>
-      {
-        cryptoExchanges?.data?.exchanges?.map((list, index) => (
-          <Accordion key={index}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls={`panel${index}a-content`}
-              id={`panel${index}a-header`}
-              sx={{ backgroundColor:"#F7F7F7", borderBottom: "1px solid #848484" }}
-            >
-              <Typography>{`${list.rank}. ${list.name}`}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis eget.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-        ))
-      }
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{ color: "#1565c0", fontSize: "14px", fontWeight:"bold" }}>Rank</TableCell>
+              <TableCell sx={{ color: "#1565c0", fontSize: "14px", fontWeight:"bold" }}>Exchanges</TableCell>
+              <TableCell sx={{ color: "#1565c0", fontSize: "14px", fontWeight:"bold" }} align="center">Volume(24h)</TableCell>
+              <TableCell sx={{ color: "#1565c0", fontSize: "14px", fontWeight:"bold" }} align="center">Markets</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {
+              cryptoExchanges?.data?.exchanges?.map((list, index) => (
+                <TableRow
+                key={list.rank}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row" align="left">
+                    {list.rank}
+                  </TableCell>
+                  <TableCell align="center" sx={{ display: "flex", justifyContent:"flex-start", alignItems:"center" }}>
+                    <Avatar sx={{ borderRadius:"0", marginRight: "20px" }} src={list.iconUrl} /> <Typography fontWeight={700}>{list.name}</Typography>
+                  </TableCell>
+                  <TableCell align="center">{millify(list["24hVolume"])}</TableCell>
+                  <TableCell align="center">{list.numberOfMarkets}</TableCell>
+
+                </TableRow>
+              ))
+            }
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   )
 }

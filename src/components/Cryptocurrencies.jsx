@@ -31,7 +31,6 @@ const Cryptocurrencies = ({ simplified }) => {
     setCryptos(filteredData);
   }, [cryptosList, search])
   if(isFetching) return 'Loading ...';
-  
   return (
     <>
       {!simplified &&(
@@ -55,7 +54,7 @@ const Cryptocurrencies = ({ simplified }) => {
                   <Typography variant="body2" component="p" fontWeight={400}>Daily Change: {millify(currency.change)}</Typography>
                 </CardContent>
                 <CardActions>
-                  <Link to={`/crypto/${currency.id}`} style={{ textDecoration: "none" }}>
+                  <Link to={`/crypto/${currency.uuid}`} style={{ textDecoration: "none" }}>
                     <Button size="small">Learn More</Button>
                   </Link>
                 </CardActions>
